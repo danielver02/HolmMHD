@@ -36,6 +36,8 @@ double precision :: rho(-1:Nx+2,-1:Ny+2,-1:Nz+2),P(-1:Nx+2,-1:Ny+2,-1:Nz+2)
 double precision :: U(3,-1:Nx+2,-1:Ny+2,-1:Nz+2), B(3,-2:Nx+2,-2:Ny+2,-2:Nz+2)
 double precision :: divB(Nx,Ny,Nz)
 
+double precision :: Binter(3)
+
 double precision, allocatable, dimension(:,:,:) :: rhoout,Pout
 double precision, allocatable, dimension(:,:,:,:) :: Uout,Bout
 
@@ -184,7 +186,16 @@ call h5dwrite_f(dset5_id, H5T_NATIVE_DOUBLE, Uout, countfield, error, memspace5,
 deallocate(Uout)
 
 allocate(Bout(3,Nx,Ny,Nz))
-Bout(:,:,:,:)=B(1:3,1:Nx,1:Ny,1:Nz)
+do i=1,Nx
+	do j=1,Ny
+		do k=1,Nz
+			call B_interpol(B,Binter,i,j,k)
+			Bout(1,i,j,k)=Binter(1)
+			Bout(2,i,j,k)=Binter(2)
+			Bout(3,i,j,k)=Binter(3)
+		enddo
+	enddo
+enddo
 call h5dwrite_f(dset6_id, H5T_NATIVE_DOUBLE, Bout, countfield, error, memspace6, dspace6_id)
 deallocate(Bout)
 

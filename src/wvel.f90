@@ -67,20 +67,22 @@ integer :: i,j,k
 double precision :: B(3,-2:Nx+2,-2:Ny+2,-2:Nz+2), U(3,-1:Nx+2,-1:Ny+2,-1:Nz+2)
 double precision :: rho(-1:Nx+2,-1:Ny+2,-1:Nz+2), P(-1:Nx+2,-1:Ny+2,-1:Nz+2)
 double precision :: wvel(3,-1:Nx+2,-1:Ny+2,-1:Nz+2)
+double precision :: Binter(3)
 double precision :: cs,vA
 
+call B_interpol(B,Binter,i,j,k)
+
 cs=sqrt(gamma*P(i,j,k)/rho(i,j,k))
-vA=sqrt(B(1,i,j,k)*B(1,i,j,k)+B(2,i,j,k)*B(2,i,j,k)+B(3,i,j,k)*B(3,i,j,k))/sqrt(4.d0*M_PI*rho(i,j,k))
+vA=sqrt(Binter(1)*Binter(1)+Binter(2)*Binter(2)+Binter(3)*Binter(3))/sqrt(4.d0*M_PI*rho(i,j,k))
 
-if(isnan(cs)) cs=0.d0
 
-wvel(1,i,j,k)=sqrt((cs*cs+vA*vA)**2-4.d0*cs*cs*B(1,i,j,k)*B(1,i,j,k)/(4.d0*M_PI*rho(i,j,k)))
+wvel(1,i,j,k)=sqrt((cs*cs+vA*vA)**2-4.d0*cs*cs*Binter(1)*Binter(1)/(4.d0*M_PI*rho(i,j,k)))
 wvel(1,i,j,k)=sqrt(0.5d0*(wvel(1,i,j,k)+cs*cs+vA*vA))+abs(U(1,i,j,k))
 
-wvel(2,i,j,k)=sqrt((cs*cs+vA*vA)**2-4.d0*cs*cs*B(2,i,j,k)*B(2,i,j,k)/(4.d0*M_PI*rho(i,j,k)))
+wvel(2,i,j,k)=sqrt((cs*cs+vA*vA)**2-4.d0*cs*cs*Binter(2)*Binter(2)/(4.d0*M_PI*rho(i,j,k)))
 wvel(2,i,j,k)=sqrt(0.5d0*(wvel(2,i,j,k)+cs*cs+vA*vA))+abs(U(2,i,j,k))
 
-wvel(3,i,j,k)=sqrt((cs*cs+vA*vA)**2-4.d0*cs*cs*B(3,i,j,k)*B(3,i,j,k)/(4.d0*M_PI*rho(i,j,k)))
+wvel(3,i,j,k)=sqrt((cs*cs+vA*vA)**2-4.d0*cs*cs*Binter(3)*Binter(3)/(4.d0*M_PI*rho(i,j,k)))
 wvel(3,i,j,k)=sqrt(0.5d0*(wvel(3,i,j,k)+cs*cs+vA*vA))+abs(U(3,i,j,k))
 
 
