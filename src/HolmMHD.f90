@@ -26,7 +26,29 @@
 !of the authors and should not be interpreted as representing official policies,
 !either expressed or implied, of the HolmMHD project.
 
-include "globals.h"
+
+module globals
+
+integer :: Nx,Ny,Nz,Nt,outsteps
+integer :: RBx,RBy,RBz
+integer :: iproc,nproc,ierror
+
+logical :: master
+
+double precision :: dx,dy,dz
+double precision :: dt,gamma
+double precision :: M_PI=2.d0*asin(1.d0)
+
+
+integer, allocatable,dimension(:) :: proc_for_block,communi_blocks,communi_procs
+integer, allocatable,dimension(:) :: communi_edge_blocks,communi_edge_procs
+integer, allocatable,dimension(:) :: communi_corner_blocks,communi_corner_procs
+integer, allocatable,dimension(:,:) :: neighbours,edge_neighbours,corner_neighbours
+
+
+end module
+
+
 
 
 program HolmMHD

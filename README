@@ -12,12 +12,13 @@ HolmMHD has the following requirements:
     MPI
 
 Compile the code by executing
-
+    ./configure --with-hdf5=/path/to/hdf5        (this could be: "/usr/local/hdf5" on a Mac)
     make
+    mkdir data       (if necessary)
 
 in the main directory. Then run HolmMHD with
 
-    mpirun -np <NUMBER OF NODES> ./bin/HolmMHD
+    mpirun -np <NUMBER OF NODES> ./src/HolmMHD
 
 The parameters are set in the file parameters.f90 in the ./src directory. The initialisation is set in the file initialise.f90 in the ./src directory.
-The code requires the folders src, bin, obj, and data in the main directory.
+The code requires the folders src and data in the main directory.
