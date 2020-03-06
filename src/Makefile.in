@@ -102,7 +102,8 @@ am_HolmMHD_OBJECTS = HolmMHD.$(OBJEXT) BField.$(OBJEXT) divF.$(OBJEXT) \
 	initialise.$(OBJEXT) mpi_routines.$(OBJEXT) output.$(OBJEXT) \
 	parameters.$(OBJEXT) wvel.$(OBJEXT)
 HolmMHD_OBJECTS = $(am_HolmMHD_OBJECTS)
-HolmMHD_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
+HolmMHD_DEPENDENCIES = $(am__DEPENDENCIES_1)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -238,8 +239,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_FCFLAGS = -fcheck=all -fbacktrace -Wconversion -Wsurprising  -fbounds-check -ffixed-line-length-none -ffree-line-length-none -lm -I$(HDF5_INC)
-AM_LDFLAGS = -ldl -L$(HDF5_LIB) $(HDF5_LDFLAGS)
+AM_FCFLAGS = -I$(HDF5_INC) -fcheck=all -fbacktrace -Wconversion -Wsurprising  -fbounds-check -ffixed-line-length-none -ffree-line-length-none -lm -ldl
+HolmMHD_LDADD = -L$(HDF5_LIB) $(HDF5_LDFLAGS)
 HolmMHD_SOURCES = HolmMHD.f90 BField.f90 divF.f90 initialise.f90 mpi_routines.f90 output.f90 parameters.f90 wvel.f90
 all: all-am
 
